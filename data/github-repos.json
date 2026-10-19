@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Pokemon-2D-Battle-Simulator",
+        "description": "A 2D Pokémon battle simulator built with Python and Pygame, featuring PvC, local PvP, and TCP-based online multiplayer.",
+        "language": "Python",
+        "html_url": "https://github.com/AbdulFarrah/Pokemon-2D-Battle-Simulator"
+    },
+    {
+        "name": "Local_AI_Workbench",
+        "description": "A local AI workbench combining Mistral LLM chat, persistent memory, and Stable Diffusion image generation.",
+        "language": "Python",
+        "html_url": "https://github.com/AbdulFarrah/Local_AI_Workbench"
+    },
+    {
+        "name": "sysdash",
+        "description": "Lightweight terminal-based Linux system monitor with interactive hardware and process views.",
+        "language": "C",
+        "html_url": "https://github.com/AbdulFarrah/sysdash"
+    },
+    {
+        "name": "Ludo-CLI",
+        "description": "A terminal-based Ludo game in C++17 with an ANSI-colored 15×15 board, animated dice, multiplayer, and optional AI.",
+        "language": "C++",
+        "html_url": "https://github.com/AbdulFarrah/Ludo-CLI"
+    },
+    {
+        "name": "Chess",
+        "description": "Terminal-based C++17 chess game with Player-vs-Player, Player-vs-AI, and AI-vs-AI modes, featuring Stockfish integration and full chess rule handling.",
+        "language": "C++",
+        "html_url": "https://github.com/AbdulFarrah/Chess"
+    },
+    {
+        "name": "HFT-Matching-Engine",
+        "description": "Production-oriented C++20 HFT matching engine with Price-Time Priority, multi-symbol concurrent processing, market data, snapshots, benchmarking, and GoogleTest coverage.",
+        "language": "C++",
+        "html_url": "https://github.com/AbdulFarrah/HFT-Matching-Engine"
+    }
+]

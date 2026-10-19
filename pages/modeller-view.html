@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Modeller Artwork</title>
+
+    <link rel="stylesheet" href="../css/modeller-view.css">
+</head>
+<body class="modeller-view-page">
+
+    <header class="modeller-view-header">
+        <h1 id="artwork-title">Modeller Artwork</h1>
+        <button id="close-viewer" type="button">Close</button>
+    </header>
+
+    <main class="modeller-view-container">
+        <img id="artwork-image" alt="Modeller artwork">
+    </main>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get("file");
+        const name = params.get("name") || "Modeller Artwork";
+
+        const title = document.getElementById("artwork-title");
+        const image = document.getElementById("artwork-image");
+
+        title.textContent = name;
+        document.title = name;
+
+        if (file) {
+            image.src = file;
+            image.alt = name;
+
+            image.addEventListener("error", () => {
+                document.querySelector(".modeller-view-container").textContent =
+                    "Unable to load this image.";
+            }, { once: true });
+        } else {
+            document.querySelector(".modeller-view-container").textContent =
+                "No image was specified.";
+        }
+
+        document.getElementById("close-viewer").addEventListener("click", () => {
+            window.close();
+        });
+    </script>
+
+</body>
+</html>

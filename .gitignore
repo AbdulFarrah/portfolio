@@ -1,0 +1,9 @@
+scripts/
+phase0_test/
+
+.env
+.env.*
+!.env.example
+
+.DS_Store
+Thumbs.db

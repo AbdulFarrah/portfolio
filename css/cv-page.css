@@ -1,0 +1,259 @@
+
+/* =========================================
+   CV PAGE LAYOUT
+========================================= */
+
+.cv-page {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.cv-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+    padding: 16px;
+    gap: 16px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   LEFT SIDE — CUSTOM PDF VIEWER
+========================================= */
+
+.cv-viewer-section {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    background: #000;
+    border: 1px solid #444;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom toolbar */
+
+.cv-viewer-header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 12px 16px;
+    background: #000;
+    border-bottom: 1px solid #444;
+}
+
+.cv-viewer-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.cv-viewer-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cv-viewer-controls button,
+.cv-download-button {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background: #242424;
+    color: #fff;
+    font-size: 23px;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cv-viewer-controls button:hover:not(:disabled),
+.cv-download-button:hover {
+    background: #383838;
+    border-color: #777;
+}
+
+.cv-viewer-controls button:active:not(:disabled),
+.cv-download-button:active {
+    transform: scale(0.96);
+}
+
+.cv-viewer-controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.cv-viewer-controls button:focus-visible,
+.cv-download-button:focus-visible {
+    outline: 3px solid #234e70;
+    outline-offset: 2px;
+}
+
+#pdf-zoom-level {
+    min-width: 48px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+}
+
+.cv-download-button svg {
+    width: 19px;
+    height: 19px;
+}
+
+/* Scrollable document area */
+
+.pdf-scroll-container {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+
+    padding: 12px;
+    background: #000;
+
+    /* Keep scrolling, hide the scrollbar. */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.pdf-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.pdf-pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: max-content;
+    min-width: 100%;
+    margin: 0 auto;
+}
+
+/* Individual PDF pages remain white */
+
+.pdf-page-wrapper {
+    flex: 0 0 auto;
+    max-width: none;
+    overflow: hidden;
+
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pdf-page-canvas {
+    display: block;
+    max-width: none;
+    height: auto;
+}
+
+/* =========================================
+   RIGHT SIDE — PERSONAL SUMMARY
+========================================= */
+
+.cv-summary-section {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 24px;
+    background: #242424;
+    border: 1px solid #444;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+}
+
+#cv-summary h2 {
+    margin: 0 0 12px;
+    font-size: 24px;
+    color: #fff;
+}
+
+#cv-summary p {
+    margin: 0 0 28px;
+    line-height: 1.7;
+    color: #fff;
+}
+
+/* =========================================
+   RESPONSIVE LAYOUT
+========================================= */
+
+@media (max-width: 700px) {
+    .cv-page {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+    }
+
+    .cv-layout {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding: 10px;
+        gap: 10px;
+        overflow: visible;
+    }
+
+    .cv-viewer-section,
+    .cv-summary-section {
+        flex: 1 1 auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cv-viewer-section {
+        height: 70vh;
+        min-height: 400px;
+    }
+
+    .cv-summary-section {
+        overflow: visible;
+        padding: 18px;
+    }
+
+    .cv-viewer-header {
+        padding: 10px 12px;
+    }
+
+    .cv-viewer-controls {
+        gap: 6px;
+    }
+
+    .cv-viewer-controls button,
+    .cv-download-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    #cv-summary h2 {
+        font-size: 21px;
+    }
+}

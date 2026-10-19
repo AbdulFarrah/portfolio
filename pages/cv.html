@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Me | Abdul Karim Farrah</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cv-page.css">
+</head>
+
+<body class="cv-page">
+
+    <main class="cv-layout">
+
+        
+<!-- LEFT SIDE: PDF.JS VIEWER -->
+<section class="cv-viewer-section"
+         aria-label="Resume PDF viewer">
+
+    <header class="cv-viewer-header">
+        <span class="cv-viewer-title">RESUME</span>
+
+        <div class="cv-viewer-controls">
+            <button
+                type="button"
+                id="pdf-zoom-out"
+                aria-label="Zoom out"
+                title="Zoom out"
+            >−</button>
+
+            <span id="pdf-zoom-level">100%</span>
+
+            <button
+                type="button"
+                id="pdf-zoom-in"
+                aria-label="Zoom in"
+                title="Zoom in"
+            >+</button>
+
+            <a
+                class="cv-download-button"
+                href="../assets/CV/resume.pdf"
+                download="Abdul_Karim_Farrah_Resume.pdf"
+                title="Download resume"
+                aria-label="Download resume"
+            >
+                <svg viewBox="0 0 24 24"
+                     aria-hidden="true"
+                     focusable="false">
+                    <path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <div id="pdf-scroll-container" class="pdf-scroll-container">
+        <div id="pdf-pages" class="pdf-pages"></div>
+    </div>
+
+</section>
+
+
+        <!-- RIGHT SIDE: PERSONAL SUMMARY -->
+        <section class="cv-summary-section">
+
+            <div id="cv-summary">
+
+                <h2>About Me</h2>
+                <p>
+                    A little introduction about me, my interests,
+                    and the things that make me who I am.
+                </p>
+
+                <h2>College Days</h2>
+                <p>
+                    A look back at my college days, experiences,
+                    memorable moments, and lessons learned.
+                </p>
+
+                <h2>Side Quests</h2>
+                <p>
+                    Outside work, I enjoy anime and manga, creative
+                    writing, 3D modelling, and experimenting with
+                    technology and personal projects.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="../js/sections/cv-pdf-viewer.js"></script>
+<script type="module" src="../js/sections/cv-page.js"></script>
+
+</body>
+</html>

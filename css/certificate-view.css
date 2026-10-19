@@ -1,0 +1,116 @@
+
+/* =========================================
+   CERTIFICATE VIEWER
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.certificate-view-page {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #111;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.certificate-view-header {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 20px;
+    background: #1c1c1c;
+}
+
+.certificate-view-header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+#close-viewer {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    border: 1px solid #666;
+    border-radius: 6px;
+    background: #333;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#close-viewer:hover {
+    background: #555;
+}
+
+/* =========================================
+   FULL-VIEW CONTENT
+========================================= */
+
+.certificate-view-container {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+    overflow: hidden;
+}
+
+.certificate-full-image,
+.certificate-full-pdf {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.certificate-full-image {
+    object-fit: contain;
+}
+
+.certificate-full-pdf {
+    background: #fff;
+}
+
+/* =========================================
+   SMALL SCREENS
+========================================= */
+
+@media (max-width: 500px) {
+    .certificate-view-header {
+        padding: 10px 12px;
+    }
+
+    .certificate-view-header h1 {
+        font-size: 15px;
+    }
+
+    #close-viewer {
+        padding: 7px 12px;
+    }
+
+    .certificate-view-container {
+        padding: 6px;
+    }
+}

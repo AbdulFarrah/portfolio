@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Viewer</title>
+
+    <link rel="stylesheet" href="../css/certificate-view.css">
+</head>
+<body class="certificate-view-page">
+
+    <header class="certificate-view-header">
+        <h1 id="certificate-title">Certificate</h1>
+        <button id="close-viewer" type="button">Close</button>
+    </header>
+
+    <main id="certificate-container" class="certificate-view-container">
+        <!-- The image or PDF will be loaded here. -->
+    </main>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        const file = params.get("file");
+        const type = params.get("type");
+        const name = params.get("name") || "Certificate";
+
+        const title = document.getElementById("certificate-title");
+        const container = document.getElementById("certificate-container");
+
+        title.textContent = name;
+        document.title = name;
+
+        if (!file) {
+            container.textContent = "No certificate was specified.";
+        } else if (type === "pdf") {
+            const pdf = document.createElement("iframe");
+
+            pdf.className = "certificate-full-pdf";
+            pdf.src = file + "#toolbar=1&navpanes=0&scrollbar=0&view=Fit";
+            pdf.title = name;
+
+            container.appendChild(pdf);
+        } else {
+            const img = document.createElement("img");
+
+            img.className = "certificate-full-image";
+            img.src = file;
+            img.alt = name;
+
+            img.addEventListener("error", () => {
+                container.textContent = "Unable to load this certificate.";
+            }, { once: true });
+
+            container.appendChild(img);
+        }
+
+        document.getElementById("close-viewer").addEventListener("click", () => {
+            window.close();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1458 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #090a0e;
+    color: #f1f3f8;
+    overflow-x: hidden;
+    position: relative;
+    isolation: isolate;
+}
+
+
+/* =========================================
+   NIGHT SKY BACKGROUND
+========================================= */
+
+
+.night-sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: #030509;
+}
+
+
+
+
+.night-sky-clouds {
+    position: absolute;
+    inset: -25%;
+    opacity: 1;
+    filter: blur(35px);
+
+    background:
+        radial-gradient(ellipse 35% 20% at 15% 20%,
+            rgba(102, 124, 165, 0.48), transparent 100%),
+        radial-gradient(ellipse 30% 24% at 45% 35%,
+            rgba(73, 95, 140, 0.42), transparent 100%),
+        radial-gradient(ellipse 38% 22% at 78% 20%,
+            rgba(119, 133, 164, 0.42), transparent 100%),
+        radial-gradient(ellipse 35% 24% at 25% 62%,
+            rgba(68, 88, 130, 0.4), transparent 100%),
+        radial-gradient(ellipse 32% 22% at 75% 72%,
+            rgba(105, 119, 151, 0.38), transparent 100%),
+        radial-gradient(ellipse 28% 18% at 50% 90%,
+            rgba(74, 92, 132, 0.38), transparent 100%);
+
+    animation: cloud-drift 38s ease-in-out infinite alternate;
+}
+
+
+@keyframes cloud-drift {
+    from {
+        transform: translate3d(-2%, -1%, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(3%, 2%, 0) scale(1.08);
+    }
+}
+
+
+/* =========================================
+   CURVED SHOOTING STARS
+========================================= */
+
+.falling-stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shooting-star {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Short trail that travels along the curve */
+.star-trail {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 55 945;
+    stroke-dashoffset: 55;
+    filter: drop-shadow(0 0 4px rgba(145, 185, 255, 0.5));
+    opacity: 0.8;
+}
+
+/* Bright head */
+.star-head {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(210, 230, 255, 0.95));
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* Preserve the staggered timing */
+.star-1 { animation: star-visibility 10s linear infinite; animation-delay: -8s; }
+.star-2 { animation: star-visibility 12s linear infinite; animation-delay: -5s; }
+.star-3 { animation: star-visibility 11s linear infinite; animation-delay: -2s; }
+.star-4 { animation: star-visibility 13s linear infinite; animation-delay: -7s; }
+.star-5 { animation: star-visibility 10s linear infinite; animation-delay: -4s; }
+.star-6 { animation: star-visibility 11s linear infinite; animation-delay: -3s; }
+.star-7 { animation: star-visibility 12s linear infinite; animation-delay: -9s; }
+.star-8 { animation: star-visibility 10s linear infinite; animation-delay: -6s; }
+.star-9 { animation: star-visibility 13s linear infinite; animation-delay: -1s; }
+.star-10 { animation: star-visibility 11s linear infinite; animation-delay: -7s; }
+
+@keyframes star-visibility {
+    0%, 100% { opacity: 0; }
+    5%, 80% { opacity: 1; }
+    90% { opacity: 0.4; }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .night-sky-clouds,
+    .shooting-star {
+        animation: none;
+    }
+}
+
+
+
+
+/* =========================================
+   REDUCED MOTION ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .night-sky-clouds,
+    .falling-stars::before,
+    .falling-stars::after {
+        animation: none;
+    }
+}
+
+
+/* =========================================
+   PROFILE / HEADER
+========================================= */
+
+
+
+.profile {
+    width: fit-content;
+    max-width: calc(100% - 32px);
+
+    margin: 0 auto 25px;
+    padding: 8px 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    /* Subtle liquid glass */
+    background: rgba(150, 170, 205, 0.055);
+    border: 1px solid rgba(220, 232, 255, 0.12);
+    border-radius: 16px;
+
+    -webkit-backdrop-filter: blur(18px) saturate(125%);
+    backdrop-filter: blur(18px) saturate(125%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),
+        0 4px 16px rgba(0, 0, 0, 0.10);
+
+    position: relative;
+    isolation: isolate;
+}
+
+
+
+
+/* =========================================
+   PROFILE PHOTO
+========================================= */
+
+.profile-photo {
+    flex-shrink: 0;
+}
+
+.profile-photo img {
+    display: block;
+
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================
+   PROFILE DETAILS
+========================================= */
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: center;
+}
+
+.profile-details h1 {
+    margin: 0;
+    color: #f1f3f8;
+    font-size: 32px;
+    line-height: 1.1;
+}
+
+.tagline {
+    margin: 6px 0 12px;
+    color: #f1f3f8;
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+
+/* =========================================
+   CONTACT INFORMATION
+========================================= */
+
+.contact-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.contact-info a {
+    color: #d0d5e2;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   MAIN 5-BOX LAYOUT
+========================================= */
+
+.portfolio-grid {
+    display: grid;
+
+    /*
+        Horizontal layout:
+
+        29%  |  42%  |  29%
+
+        Box 2       CV       Box 3
+        Box 4               Box 5
+    */
+    grid-template-columns: 29fr 42fr 29fr;
+
+    /*
+        The four outer boxes are square.
+        Their height is therefore determined
+        by their 29-part column width.
+    */
+    grid-template-rows: auto auto;
+
+    gap: 20px;
+
+    width: 100%;
+
+    /*
+        Let the content/aspect-ratio determine
+        the actual height instead of forcing
+        the previous 600px minimum.
+    */
+    min-height: 0;
+}
+
+
+/* =========================================
+   COMMON BOX
+========================================= */
+
+
+
+.portfolio-box {
+    position: relative;
+    isolation: isolate;
+
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 16px;
+
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    overflow: hidden;
+
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+        0 8px 30px rgba(0, 0, 0, 0.22);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.portfolio-box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.65);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 12px 32px rgba(0, 0, 0, 0.3),
+        0 0 22px rgba(220, 230, 255, 0.1);
+}
+
+
+
+.portfolio-box h2 {
+    margin: 0 0 10px;
+    color: #f1f3f8;
+    font-size: 24px;
+}
+
+.box-content {
+    font-size: 16px;
+}
+
+
+/* =========================================
+   OUTER BOXES
+========================================= */
+
+/*
+    Box 2, 3, 4 and 5 must all be square.
+
+    Since their width is determined by the
+    29-part outer grid columns, aspect-ratio
+    makes their height exactly equal to width.
+*/
+
+.github-box,
+.certificates-box,
+.modeller-box,
+.creative-box {
+    aspect-ratio: 1 / 1;
+}
+
+
+/* =========================================
+   BOX POSITIONS
+========================================= */
+
+/* BOX 1 — CV */
+
+.cv-box {
+    grid-column: 2;
+    grid-row: 1 / 3;
+
+    /*
+        Keep CV exactly centered inside
+        the middle column and two rows.
+    */
+    align-self: center;
+    justify-self: center;
+
+    /*
+        Middle column width = 42 parts.
+
+        Outer box width = 29 parts.
+
+        Desired CV height:
+            29 × 1.25 = 36.25 parts
+
+        Therefore CV aspect ratio is:
+
+            width / height
+            42 / 36.25
+    */
+    width: 100%;
+
+    aspect-ratio: 42 / 36.25;
+
+    height: auto;
+
+    min-height: 0;
+    max-height: none;
+}
+
+
+/* BOX 2 — GITHUB */
+
+.github-box {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+
+/* BOX 3 — CERTIFICATES */
+
+.certificates-box {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+
+/* BOX 4 — MODELLER */
+
+.modeller-box {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+
+/* BOX 5 — CREATIVE CORNER */
+
+.creative-box {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) and (min-width: 651px) {
+
+    .profile {
+        gap: 18px;
+        margin-bottom: 22px;
+    }
+
+    .profile-photo img {
+        width: 105px;
+        height: 105px;
+    }
+
+    .profile-details h1 {
+        font-size: 28px;
+    }
+
+    .tagline {
+        font-size: 16px;
+        margin: 5px 0 10px;
+    }
+
+    .contact-info {
+        gap: 8px 16px;
+    }
+
+    .contact-info a {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) and (min-width: 401px) {
+
+    .profile {
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .profile-photo img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .profile-details h1 {
+        font-size: 24px;
+    }
+
+    .tagline {
+        font-size: 15px;
+        margin: 5px 0 9px;
+    }
+
+    .contact-info {
+        gap: 6px 14px;
+    }
+
+    .contact-info a {
+        font-size: 12px;
+    }
+
+
+    /* -------------------------------------
+       MOBILE BOX LAYOUT
+    ------------------------------------- */
+
+    .portfolio-grid {
+        display: flex;
+        flex-direction: column;
+
+        gap: 15px;
+
+        min-height: 0;
+    }
+
+    .portfolio-box {
+        aspect-ratio: auto;
+
+        min-height: 180px;
+    }
+
+    /*
+        Mobile order:
+
+        1. CV
+        2. GitHub
+        3. Certificates
+        4. Modeller
+        5. Creative Corner
+    */
+
+    .cv-box {
+        order: 1;
+
+        width: 100%;
+        height: auto;
+
+        aspect-ratio: auto;
+    }
+
+    .github-box {
+        order: 2;
+    }
+
+    .certificates-box {
+        order: 3;
+    }
+
+    .modeller-box {
+        order: 4;
+    }
+
+    .creative-box {
+        order: 5;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+    .profile {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .profile-photo img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .profile-details h1 {
+        font-size: 20px;
+    }
+
+    .tagline {
+        font-size: 13px;
+        margin: 4px 0 7px;
+    }
+
+    .contact-info {
+        gap: 4px 10px;
+    }
+
+    .contact-info a {
+        font-size: 11px;
+    }
+
+
+    /* -------------------------------------
+       MOBILE BOX LAYOUT
+    ------------------------------------- */
+
+    .portfolio-grid {
+        display: flex;
+        flex-direction: column;
+
+        gap: 15px;
+
+        min-height: 0;
+    }
+
+    .portfolio-box {
+        aspect-ratio: auto;
+
+        min-height: 160px;
+
+        padding: 20px;
+    }
+
+    .cv-box {
+        order: 1;
+
+        width: 100%;
+        height: auto;
+
+        aspect-ratio: auto;
+    }
+
+    .github-box {
+        order: 2;
+    }
+
+    .certificates-box {
+        order: 3;
+    }
+
+    .modeller-box {
+        order: 4;
+    }
+
+    .creative-box {
+        order: 5;
+    }
+
+    .portfolio-box h2 {
+        font-size: 20px;
+    }
+}
+
+
+/* =========================================
+   CAROUSEL
+========================================= */
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+
+    display: flex;
+    align-items: stretch;
+
+    padding: 0;
+}
+
+.carousel-viewport {
+    --card-width: 100%;
+    --card-gap: 0px;
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.carousel-track {
+    display: flex;
+    align-items: stretch;
+
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    gap: var(--card-gap);
+
+    transform: translateX(0);
+    transition: transform 0.65s ease-in-out;
+    will-change: transform;
+}
+
+/* =========================================
+   CAROUSEL CARDS
+========================================= */
+
+.carousel-card {
+    flex: 0 0 var(--card-width);
+    width: var(--card-width);
+    min-width: 0;
+    height: 100%;
+
+    padding: 22px 16px;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    text-align: center;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.carousel-card-clickable {
+    cursor: pointer;
+}
+
+.carousel-card-clickable:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: -5px;
+}
+
+/* =========================================
+   DISTINCT CARD COLORS
+========================================= */
+
+.carousel-color-1 { background: #234e70; }
+.carousel-color-2 { background: #6b3f77; }
+.carousel-color-3 { background: #246b62; }
+.carousel-color-4 { background: #895129; }
+.carousel-color-5 { background: #394b85; }
+.carousel-color-6 { background: #765044; }
+
+/* =========================================
+   GITHUB CARD CONTENT
+========================================= */
+
+.github-card h3 {
+    margin: 0;
+    font-size: clamp(14px, 1.3vw, 21px);
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.github-card p {
+    margin: 0;
+    font-size: clamp(11px, 0.9vw, 14px);
+    line-height: 1.5;
+}
+
+.github-card .github-language {
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.github-card .github-card-action {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+/* =========================================
+   OVERLAY NAVIGATION BUTTONS
+========================================= */
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+
+    width: 34px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 9px;
+
+    background: rgba(20, 25, 30, 0.8);
+    color: #ffffff;
+
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.carousel-button:hover:not(:disabled) {
+    background: rgba(17, 24, 32, 0.95);
+}
+
+.carousel-button:active:not(:disabled) {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.carousel-previous {
+    left: 8px;
+}
+
+.carousel-next {
+    right: 8px;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.carousel-empty {
+    margin: auto;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* =========================================
+   GITHUB BOX HEADING AND CONTENT
+========================================= */
+
+.github-box {
+    padding: 12px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.github-box > h2 {
+    flex: 0 0 auto;
+    margin: 0 0 6px;
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+.github-box > .box-content {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+}
+
+.github-carousel-container {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+}
+
+.github-carousel-container > .carousel {
+    width: 100%;
+    height: 100%;
+}
+
+/* GitHub keeps space for its heading.
+   Other carousel boxes use their whole box. */
+
+.certificates-box,
+.modeller-box,
+.creative-box {
+    padding: 0;
+}
+
+.certificates-box > h2 {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 12px 0 8px;
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+.modeller-box > h2 {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 12px 0 8px;
+    font-size: 17px;
+    line-height: 1.2;
+}
+.creative-box > h2 {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 12px 0 8px;
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+.certificates-box .carousel,
+.modeller-box .carousel,
+.creative-box .carousel {
+    width: 100%;
+    height: 100%;
+}
+
+.certificates-box .carousel-card,
+.modeller-box .carousel-card,
+.creative-box .carousel-card {
+    border-radius: 15px;
+}
+
+.certificates-box > .box-content,
+.modeller-box > .box-content,
+.creative-box > .box-content {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
+    display: flex;
+}
+
+/* Add this immediately below the block above */
+.creative-box > .box-content {
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+/* =========================================
+   RESPONSIVE CAROUSEL
+========================================= */
+
+@media (max-width: 650px) {
+    .carousel-button {
+        width: 28px;
+        height: 38px;
+        font-size: 24px;
+    }
+
+    .carousel-previous {
+        left: 6px;
+    }
+
+    .carousel-next {
+        right: 6px;
+    }
+
+    .carousel-card {
+        padding: 16px 10px;
+    }
+
+    .github-box {
+        padding: 10px;
+    }
+
+    .github-box > h2 {
+        font-size: 15px;
+    }
+
+    .certificates-box,
+    .modeller-box,
+    .creative-box {
+        padding: 0;
+    }
+}
+
+
+
+/* =========================================
+   PIXIV / CREATIVE CORNER
+========================================= */
+
+.pixiv-carousel-container {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+}
+
+.pixiv-carousel-container > .carousel {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* -----------------------------------------
+   PIXIV CARD
+----------------------------------------- */
+
+.pixiv-card {
+    position: relative;
+    padding: 0;
+    gap: 0;
+    justify-content: flex-end;
+
+    /* Make the unused area around the cover black */
+    background: #000;
+}
+
+/* -----------------------------------------
+   COVER IMAGE
+----------------------------------------- */
+
+.pixiv-cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* -----------------------------------------
+   TITLE OVERLAY
+----------------------------------------- */
+
+.pixiv-title {
+    position: absolute;
+    z-index: 1;
+
+    /* Center horizontally, at 3/4 height */
+    left: 0;
+    top: 75%;
+    transform: translateY(-50%);
+    width: 100%;
+
+    margin: 0;
+    padding: 10px 42px;
+
+    /* Highly transparent overlay */
+    background: rgba(0, 0, 0, 0.12);
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: clamp(14px, 1.3vw, 20px);
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    overflow-wrap: anywhere;
+
+    /* Keep the cover details visible */
+    backdrop-filter: none;
+}
+/* Override shared carousel colors for Pixiv cards */
+.pixiv-card.carousel-card {
+    background: #000;
+}
+
+/* =========================================
+   MODELLER / 3D WORK
+========================================= */
+
+.modeller-carousel-container {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+}
+
+.modeller-carousel-container > .carousel {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* -----------------------------------------
+   MODELLER CARD
+----------------------------------------- */
+
+.modeller-card {
+    position: relative;
+    padding: 0;
+    gap: 0;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+}
+
+/* Override shared carousel background colors */
+.modeller-card.carousel-card {
+    background: #000;
+}
+
+/* -----------------------------------------
+   MODELLER IMAGE
+----------------------------------------- */
+
+.modeller-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* -----------------------------------------
+   TRANSPARENT LINK OVERLAY
+----------------------------------------- */
+
+.modeller-link-overlay {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 75%;
+    transform: translateY(-50%);
+    width: 100%;
+    margin: 0;
+    padding: 10px 42px;
+    background: rgba(0, 0, 0, 0.12);
+    color: rgba(255, 255, 255, 0.45);
+    font-size: clamp(12px, 1.1vw, 16px);
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* Certificates carousel */
+.certificate-card,
+.certificate-card.carousel-card {
+    position: relative;
+    padding: 0;
+    gap: 0;
+    justify-content: center;
+    background: #000;
+    overflow: hidden;
+}
+
+.certificate-image,
+.certificate-pdf {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    border: 0;
+}
+
+.certificate-pdf {
+    pointer-events: none;
+}
+
+.certificate-link-overlay {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 75%;
+    transform: translateY(-50%);
+    width: 100%;
+    margin: 0;
+    padding: 10px 42px;
+    background: rgba(0, 0, 0, 0.12);
+    color: rgba(255, 255, 255, 0.65);
+    font-size: clamp(12px, 1.1vw, 16px);
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* CV box */
+.cv-box {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.cv-box > h2 {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0 10px;
+    line-height: 1.2;
+}
+
+.cv-box > .box-content {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.cv-preview {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+}
+.cv-box {
+    padding-top: 5px;
+}
+
+/* =========================================
+   TEMPORARY: BACKGROUND EFFECTS TEST
+   Remove this block when background is ready.
+========================================= */
+/* .profile,
+.portfolio-grid {
+    visibility: hidden;
+} */
+
+
+/* =========================================
+   LIQUID GLASS — PORTFOLIO BOXES
+========================================= */
+
+.portfolio-box {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    /* Translucent blue-grey glass */
+    background: linear-gradient(
+        135deg,
+        rgba(210, 225, 255, 0.13) 0%,
+        rgba(125, 155, 205, 0.07) 45%,
+        rgba(225, 235, 255, 0.10) 100%
+    );
+
+    /* Fine reflective glass edge */
+    border: 1px solid rgba(220, 232, 255, 0.24);
+    border-radius: 20px;
+
+    /* Background blur and depth */
+    -webkit-backdrop-filter: blur(24px) saturate(145%);
+    backdrop-filter: blur(24px) saturate(145%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 1px 0 0 rgba(255, 255, 255, 0.08),
+        inset 0 -1px 0 rgba(180, 205, 255, 0.08),
+        0 8px 32px rgba(0, 0, 0, 0.22);
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* Soft reflective sheen */
+.portfolio-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+
+    background: linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.025) 28%,
+        transparent 52%,
+        rgba(170, 200, 255, 0.045) 100%
+    );
+}
+
+/* Keep actual box content above the sheen */
+.portfolio-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Gentle glass response on hover */
+.portfolio-box:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(210, 225, 255, 0.17) 0%,
+        rgba(125, 155, 205, 0.10) 45%,
+        rgba(225, 235, 255, 0.14) 100%
+    );
+
+    border-color: rgba(225, 238, 255, 0.38);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 1px 0 0 rgba(255, 255, 255, 0.10),
+        0 12px 38px rgba(0, 0, 0, 0.28),
+        0 0 20px rgba(135, 175, 255, 0.07);
+}
+
+/* Centered headings with icons */
+.portfolio-box > .box-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    text-align: center;
+}
+
+.box-heading i {
+    font-size: 0.85em;
+    opacity: 0.9;
+}
+
+/* Chess repository card */
+.github-card-chess {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(
+        120deg,
+        #101a2b 0%,
+        #172a40 60%,
+        #263b50 100%
+    ) !important;
+    border: 1px solid rgba(220, 190, 120, 0.25);
+}
+
+/* Faded chess knight decoration */
+.github-card-chess::before {
+    content: "♞";
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: "DejaVu Sans", serif;
+    font-size: clamp(130px, 15vw, 220px);
+    line-height: 1;
+    color: rgba(220, 190, 120, 0.12);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Keep all existing card information above the decoration */
+.github-card-chess > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Pokemon battle simulator */
+.github-card-pokemon {
+    background: linear-gradient(120deg, #17243e, #263d62, #482b45) !important;
+    border: 1px solid rgba(100, 190, 255, 0.3);
+}
+
+.github-card-pokemon::before {
+    content: "⚡";
+    color: rgba(255, 205, 75, 0.15);
+}
+
+/* Local AI workbench */
+.github-card-ai {
+    background: linear-gradient(120deg, #19172f, #30264f, #173c50) !important;
+    border: 1px solid rgba(165, 130, 255, 0.3);
+}
+
+.github-card-ai::before {
+    content: "✳";
+    color: rgba(130, 220, 255, 0.15);
+}
+
+/* sysdash */
+.github-card-sysdash {
+    background: linear-gradient(120deg, #111d22, #18332f, #1c3545) !important;
+    border: 1px solid rgba(100, 230, 170, 0.3);
+}
+
+.github-card-sysdash::before {
+    content: ">_";
+    font-family: monospace;
+    font-size: clamp(100px, 13vw, 180px);
+    color: rgba(100, 255, 175, 0.13);
+}
+
+/* Ludo CLI */
+.github-card-ludo {
+    background: linear-gradient(120deg, #172e2c, #294b3d, #493b2a) !important;
+    border: 1px solid rgba(255, 200, 100, 0.3);
+}
+
+.github-card-ludo::before {
+    content: "🎲";
+    color: rgba(255, 255, 255, 0.15);
+}
+
+/* HFT matching engine */
+.github-card-hft {
+    background: linear-gradient(120deg, #141d2b, #20394a, #203e42) !important;
+    border: 1px solid rgba(80, 220, 210, 0.3);
+}
+
+.github-card-hft::before {
+    content: "↗";
+    color: rgba(80, 235, 220, 0.15);
+}
+
+/* Shared faded decoration for every repository card */
+.github-card-pokemon,
+.github-card-ai,
+.github-card-sysdash,
+.github-card-ludo,
+.github-card-hft {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.github-card-pokemon::before,
+.github-card-ai::before,
+.github-card-sysdash::before,
+.github-card-ludo::before,
+.github-card-hft::before {
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(130px, 15vw, 220px);
+    line-height: 1;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.github-card-pokemon > *,
+.github-card-ai > *,
+.github-card-sysdash > *,
+.github-card-ludo > *,
+.github-card-hft > * {
+    position: relative;
+    z-index: 1;
+}
