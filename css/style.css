@@ -960,6 +960,12 @@ body {
 ========================================= */
 
 @media (max-width: 650px) {
+    /* Give image-only cards a definite height in the stacked mobile layout. */
+    .certificates-box,
+    .modeller-box {
+        height: clamp(240px, 80vw, 400px);
+    }
+
     .carousel-button {
         width: 28px;
         height: 38px;

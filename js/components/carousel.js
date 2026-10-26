@@ -25,6 +25,8 @@ export function createCarousel({
 
     let currentIndex = 0;
     let autoSlideTimer = null;
+    let transitionFallbackTimer = null;
+    let transitionEndHandler = null;
     let isTransitioning = false;
     let isPaused = false;
 
@@ -79,6 +81,43 @@ export function createCarousel({
             track.getBoundingClientRect();
             track.style.transition = "";
         }
+    }
+
+    function clearTransitionWait() {
+        if (transitionFallbackTimer !== null) {
+            clearTimeout(transitionFallbackTimer);
+            transitionFallbackTimer = null;
+        }
+
+        if (transitionEndHandler !== null) {
+            track.removeEventListener("transitionend", transitionEndHandler);
+            track.removeEventListener("transitioncancel", transitionEndHandler);
+            transitionEndHandler = null;
+        }
+    }
+
+    // Keep the carousel moving if a browser misses the CSS transition event.
+    function updatePositionWithFallback(onComplete) {
+        clearTransitionWait();
+
+        let completed = false;
+        const complete = () => {
+            if (completed) return;
+            completed = true;
+            clearTransitionWait();
+            onComplete();
+        };
+
+        transitionEndHandler = event => {
+            if (event.target !== track || event.propertyName !== "transform") return;
+            complete();
+        };
+
+        track.addEventListener("transitionend", transitionEndHandler);
+        track.addEventListener("transitioncancel", transitionEndHandler);
+        transitionFallbackTimer = window.setTimeout(complete, 1000);
+
+        updatePosition(true);
     }
 
     function createCard(item, index, isClone = false) {
@@ -187,16 +226,15 @@ export function createCarousel({
             if (direction === "forward") {
                 // Existing forward circular transition.
                 currentIndex++;
-                updatePosition(true);
 
-                track.addEventListener("transitionend", function handleLoop() {
+                updatePositionWithFallback(() => {
                     if (currentIndex !== items.length) return;
 
                     currentIndex = 0;
                     updatePosition(false);
                     isTransitioning = false;
                     scheduleNextSlide();
-                }, { once: true });
+                });
             } else {
                 // Next button wraps to the first item in reverse mode.
                 currentIndex = 0;
@@ -209,12 +247,11 @@ export function createCarousel({
         }
 
         currentIndex++;
-        updatePosition(true);
 
-        track.addEventListener("transitionend", function handleTransition() {
+        updatePositionWithFallback(() => {
             isTransitioning = false;
             scheduleNextSlide();
-        }, { once: true });
+        });
     }
 
     function showPrevious() {
@@ -227,14 +264,13 @@ export function createCarousel({
             if (direction === "reverse") {
                 // Slide right onto the cloned last card, then reset invisibly.
                 currentIndex = -1;
-                updatePosition(true);
 
-                track.addEventListener("transitionend", function handleLoop() {
+                updatePositionWithFallback(() => {
                     currentIndex = items.length - 1;
                     updatePosition(false);
                     isTransitioning = false;
                     scheduleNextSlide();
-                }, { once: true });
+                });
             } else {
                 // Preserve existing forward-mode previous-button behavior.
                 currentIndex = items.length - 1;
@@ -244,12 +280,11 @@ export function createCarousel({
             }
         } else {
             currentIndex--;
-            updatePosition(true);
 
-            track.addEventListener("transitionend", function handleTransition() {
+            updatePositionWithFallback(() => {
                 isTransitioning = false;
                 scheduleNextSlide();
-            }, { once: true });
+            });
         }
     }
 
@@ -263,6 +298,14 @@ export function createCarousel({
         scheduleNextSlide();
     }
 
+    function handlePointerEnter(event) {
+        if (event.pointerType === "mouse") pauseAutoSlide();
+    }
+
+    function handlePointerLeave(event) {
+        if (event.pointerType === "mouse") resumeAutoSlide();
+    }
+
     function handleResize() {
         updatePosition(false);
     }
@@ -270,8 +313,8 @@ export function createCarousel({
     previousButton.addEventListener("click", showPrevious);
     nextButton.addEventListener("click", showNext);
 
-    carousel.addEventListener("mouseenter", pauseAutoSlide);
-    carousel.addEventListener("mouseleave", resumeAutoSlide);
+    carousel.addEventListener("pointerenter", handlePointerEnter);
+    carousel.addEventListener("pointerleave", handlePointerLeave);
 
     window.addEventListener("resize", handleResize);
 
@@ -306,12 +349,13 @@ export function createCarousel({
 
         destroy() {
             stopAutoSlide();
+            clearTransitionWait();
 
             previousButton.removeEventListener("click", showPrevious);
             nextButton.removeEventListener("click", showNext);
 
-            carousel.removeEventListener("mouseenter", pauseAutoSlide);
-            carousel.removeEventListener("mouseleave", resumeAutoSlide);
+            carousel.removeEventListener("pointerenter", handlePointerEnter);
+            carousel.removeEventListener("pointerleave", handlePointerLeave);
 
             window.removeEventListener("resize", handleResize);
 
