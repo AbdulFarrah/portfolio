@@ -18,8 +18,14 @@ export async function initializeModeller() {
 
         const images = await response.json();
 
+        // Use the wrapper that the modeller carousel styles expect.
+        const carouselContainer = document.createElement("div");
+        carouselContainer.className = "modeller-carousel-container";
+
+        container.replaceChildren(carouselContainer);
+
         createCarousel({
-            container,
+            container: carouselContainer,
             items: images,
 
             renderItem(image) {

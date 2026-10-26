@@ -20,8 +20,14 @@ export async function initializeCertificates() {
 
         const files = await response.json();
 
+        // Give the carousel a sized wrapper, matching the other homepage cards.
+        const carouselContainer = document.createElement("div");
+        carouselContainer.className = "certificates-carousel-container";
+
+        container.replaceChildren(carouselContainer);
+
         createCarousel({
-            container,
+            container: carouselContainer,
             items: files,
 
             renderItem(file) {
