@@ -1477,3 +1477,19 @@ body {
     position: relative;
     z-index: 1;
 }
+
+/* =========================================
+   MOBILE PORTRAIT — BOX HEIGHT & BOTTOM SPACE
+========================================= */
+
+@media (max-width: 650px) and (orientation: portrait) {
+
+    .github-box,
+    .creative-box {
+        height: clamp(240px, 80vw, 400px);
+    }
+
+    .portfolio-grid {
+        padding-bottom: 30px;
+    }
+}
